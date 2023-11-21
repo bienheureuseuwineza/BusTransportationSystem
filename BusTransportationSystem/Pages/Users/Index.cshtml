@@ -1,0 +1,46 @@
+﻿@page
+@model BusTransportationSystem.Pages.Users.IndexModel
+@{
+}
+
+<br />
+<h2>List of All users</h2>
+<!--
+<a class="btn btn-primary btn-sm" href="/Users/Create">New User</a>
+-->
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>username</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Date of Birth</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserList)
+        {
+            <tr>
+
+                <td>@user.UserId</td>
+                <td>@user.Username</td>
+                <td>@user.Gender</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>@user.Dob</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Users/Edit?id=@user.UserId">View</a>
+                    <!--
+                        class="btn btn-danger btn-sm" href="/Users/Delete?id=@user.UserId">Delete</a>
+                    -->
+                </td>
+
+
+            </tr>
+
+        }
+    </tbody>
+</table>

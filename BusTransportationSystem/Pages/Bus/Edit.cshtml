@@ -1,0 +1,71 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.EditModel
+@{
+}
+<br />
+<h2>Edit Bus</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+}
+<form method="POST">
+    <input type="hidden"  name="id" value="@Model.busInfo.BusId"/>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="busName">Bus Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="busName" placeholder="Bus Name" value="@Model.busInfo.BusName">
+        </div>
+
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="driverName">Driver Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="driverName" placeholder="Driver Name" value="@Model.busInfo.DriverName">
+        </div>
+
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="busType">Bus Type</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="busType" placeholder="Bus Type" value="@Model.busInfo.Types">
+        </div>
+
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="numberOfSeats">Number of Seats</label>
+
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="numberOfSeats" placeholder="Number of Seats" value="@Model.busInfo.NumberOfSeats">
+        </div>
+
+    </div>
+    <!-- Add other form fields for Bus as needed -->
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.successMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            </div>
+        </div>
+
+    }
+    <div class="row mb-3">
+        <div class="offset-sm-4 col-sm-4 d-grid">
+            <button type="submit" class="btn btn-primary">Edit Bus</button>
+        </div>
+        <div class="offset-sm-4 col-sm-4 d-grid">
+            <a class="btn btn-outline-primary" href="/Bus/Index" role="button">Cancel</a>
+        </div>
+    </div>
+
+</form>

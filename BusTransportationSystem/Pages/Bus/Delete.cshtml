@@ -1,0 +1,38 @@
+﻿
+@page
+@using System.Data.SqlClient
+@{
+
+    String id = Request.Query["id"];
+    string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusTransportationDB;Integrated Security=True;Encrypt=False";
+
+    try
+    {
+        using (SqlConnection con = new SqlConnection(connString))
+        {
+
+            string qry = "DELETE FROM Bus WHERE bus_id = @BusId";
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand(qry, con))
+            {
+                cmd.Parameters.AddWithValue("@BusId", id);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine( "Bus deleted successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to delete bus");
+                }
+            }
+        }
+
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine("Error" + ex.Message);
+    }
+    Response.Redirect("/Bus/Index");
+
+}
