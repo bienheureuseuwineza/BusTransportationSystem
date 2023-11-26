@@ -7,7 +7,7 @@ namespace BusTransportationSystem.Pages.Bus
 {
     public class SignUpModel : PageModel { 
 
-    string connString = "Data Source=LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem;Integrated Security=True";
+    string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
     public User user = new User();
     public List<User> userList = new List<User>();
     public string message = "";
@@ -27,9 +27,9 @@ namespace BusTransportationSystem.Pages.Bus
             user.password = Request.Form["password"];
             string confirmpassword = Request.Form["password2"];
             if (string.IsNullOrEmpty(user.firstname) || string.IsNullOrEmpty(user.lastname) ||
-        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) ||
-        string.IsNullOrEmpty(user.dob) || string.IsNullOrEmpty(user.password) ||
-        string.IsNullOrEmpty(confirmpassword))
+           string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) ||
+           string.IsNullOrEmpty(user.dob) || string.IsNullOrEmpty(user.password) ||
+           string.IsNullOrEmpty(confirmpassword))
             {
                 message = "All fields are required";
                 return;
