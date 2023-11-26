@@ -14,7 +14,7 @@ namespace BusTransportationSystem.Pages.Bus
 
     public void OnGet()
         {
-
+        
         }
         public void OnPost() 
         {
@@ -25,30 +25,54 @@ namespace BusTransportationSystem.Pages.Bus
             user.role = Request.Form["role"];
             user.dob = Request.Form["dob"];
             user.password = Request.Form["password"];
+            string confirmpassword = Request.Form["password2"];
+            if (string.IsNullOrEmpty(user.firstname) || string.IsNullOrEmpty(user.lastname) ||
+        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) ||
+        string.IsNullOrEmpty(user.dob) || string.IsNullOrEmpty(user.password) ||
+        string.IsNullOrEmpty(confirmpassword))
+            {
+                message = "All fields are required";
+                return;
+            }
+
+            
+            if (user.password != confirmpassword)
+            {
+                message = "Passwords do not match";
+                return;
+            }
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "INSERT INTO User VALUES(@firstname, @lastname, @gender, @email, @role,@dob ,@password)";
+                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, dob, password) " +
+                     "VALUES (@firstname, @lastname, @gender, @email, @dob, @password); " +
+                     "SELECT SCOPE_IDENTITY();";
                 con.Open();
 
-                using (SqlCommand cmd = new SqlCommand(qry, con))
+                 using (SqlCommand cmd = new SqlCommand(qry, con))
+                 {
+                     cmd.Parameters.AddWithValue("@firstname", user.firstname);
+                     cmd.Parameters.AddWithValue("@lastname", user.lastname);
+                     cmd.Parameters.AddWithValue("@gender", user.gender);
+                     cmd.Parameters.AddWithValue("@email", user.email);
+                     cmd.Parameters.AddWithValue("@dob", user.dob);
+                     cmd.Parameters.AddWithValue("@password", user.password);
+
+                   
+                int newUserId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                if (newUserId > 0)
                 {
-                    cmd.Parameters.AddWithValue("@firstname", user.firstname);
-                    cmd.Parameters.AddWithValue("@lastname", user.lastname);
-                    cmd.Parameters.AddWithValue("@gender", user.gender);
-                    cmd.Parameters.AddWithValue("@email", user.email);
-                    cmd.Parameters.AddWithValue("@role", user.role);
-                    cmd.Parameters.AddWithValue("@dob", user.dob);
-                    cmd.Parameters.AddWithValue("@password", user.password);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        message = "user created";
-
-                    }
-                    else { message = " user not created"; }
-
+                    message = "User created with ID: " + newUserId;
+                    Response.Redirect("/Bus/LogIn"); 
+                    return;
                 }
+                else
+                {
+                    message = "User not created";
+                   
+                }
+
+            }
                 con.Close();
             }
         }
