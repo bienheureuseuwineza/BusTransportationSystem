@@ -6,7 +6,7 @@ namespace BusTransportationSystem.Pages.Bus
 {
     public class LogInModel : PageModel
     {
-        string connString = "Data Source=LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem;Integrated Security=True";
+        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
         public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
@@ -36,7 +36,7 @@ namespace BusTransportationSystem.Pages.Bus
                         if (reader.HasRows)
                         {
                             
-                            Response.Redirect("/Bus/Dashboard");
+                            Response.Redirect("/Bus/AdminDashboard");
                         }
                         else
                         {
