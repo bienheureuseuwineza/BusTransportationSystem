@@ -23,12 +23,11 @@ namespace BusTransportationSystem.Pages.Bus
             user.gender = Request.Form["gender"];
             user.email = Request.Form["email"];
             user.role = Request.Form["role"];
-            user.dob = Request.Form["dob"];
+            user.dob = DateTime.Parse(Request.Form["dob"]);
             user.password = Request.Form["password"];
             string confirmpassword = Request.Form["password2"];
             if (string.IsNullOrEmpty(user.firstname) || string.IsNullOrEmpty(user.lastname) ||
-        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) ||
-        string.IsNullOrEmpty(user.dob) || string.IsNullOrEmpty(user.password) ||
+        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.password) ||
         string.IsNullOrEmpty(confirmpassword))
             {
                 message = "All fields are required";
@@ -84,7 +83,7 @@ namespace BusTransportationSystem.Pages.Bus
             public string? gender { get; set; }
             public string? email { get; set; }
             public string? role { get; set; }
-            public string? dob { get; set; }
+            public DateTime? dob { get; set; }
             public string? password { get; set; }
 
         }

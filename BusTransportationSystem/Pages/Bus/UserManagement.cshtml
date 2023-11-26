@@ -1,0 +1,112 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.UserManagementModel
+@{
+}
+<div class="container">
+
+    @if (@Model.message.Length > 1)
+    {
+        <div class=" alert alert-info">
+            <span>@Model.message</span>
+        </div>
+    }
+
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label for="regNo">firstname</label>
+            <input type="text" class="form-control" name="firstname" placeholder="enter your firstname">
+        </div>
+        <div class="form-group">
+            <label for="fullname">lastname</label>
+            <input type="text" class="form-control" name="lastname" placeholder="enter your lastname">
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="FEMALE">
+                <label class="form-check-label" for="femaleGender">Female</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="maleGender" value="MALE">
+                <label class="form-check-label" for="maleGender">Male</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="maleGender" value="OTHER">
+                <label class="form-check-label" for="other">other</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Email">email</label>
+            <input type="email" class="form-control" name="email" placeholder="your email">
+        </div>
+        <div class="form-group">
+            <label for="fullname">ROLE</label>
+            <select class="form-control form-select" name="role">
+                <option value="CLIENT">client</option>
+                <option value="DRIVER">Driver</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dob">Date of birth</label>
+            <input type="date" class="form-control" name="dob">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">password</label>
+            <input type="password" class="form-control" name="password" placeholder="******">
+        </div>
+        <div class="form-group">
+            <label for="password">Retype password</label>
+            <input type="password" class="form-control" name="password2" placeholder="******">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+    @if (Model.userList.Any())
+    {
+        <div class="container mt-4">
+            <h2>Users RECORDS</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>firstname</th>
+                        <th>Lastname</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>role</th>
+                        <th>dob</th>
+                        <th>password</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var usr in Model.userList)
+                    {
+                        <tr>
+                            
+                            <td>@usr.firstname</td>
+                            <td>@usr.lastname</td>
+                            <td>@usr.gender</td>
+                            <td>@usr.email</td>
+                            <td>@usr.role</td>
+                            <td>@usr.dob</td>
+                            <td>HIDDEN</td>
+
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <p>No users found.</p>
+    }
+</div>
