@@ -1,0 +1,47 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageVehiclesModel
+@{
+}
+
+<h2>Manage Vehicles</h2>
+
+<!-- Registration Form -->
+<form method="post" asp-page-handler="RegisterDriver">
+    <input type="text" name="firstName" placeholder="First Name" />
+    <input type="text" name="lastName" placeholder="Last Name" />
+    <input type="text" name="drivingCategory" placeholder="Driving Category" />
+    <input type="text" name="phoneNumber" placeholder="Phone Number" />
+    <button type="submit">Register Driver</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert">@Model.Message</div>
+}
+
+<!-- Table of Drivers -->
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Driving Category</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var driver in Model.userList)
+        {
+            <tr>
+                <td>@driver.firstname</td>
+                <td>@driver.lastname</td>
+                <td>@driver.drivingCategory</td>
+                <td>@driver.phoneNumber</td>
+                <td>
+                    <!-- Add Edit and Delete buttons with appropriate handlers -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
