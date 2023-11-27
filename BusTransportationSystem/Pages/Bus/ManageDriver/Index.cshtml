@@ -1,0 +1,39 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageDriver.IndexModel
+@{
+}
+<br />
+<h2>List of Drivers</h2>
+<a class="btn btn-primary btn-sm" href="/Bus/ManageDriver/Create">New Driver</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Category</th>
+            <th>Phone</th>
+            <th>DateOfBirth</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var driv in Model.DriverList)
+        {
+            <tr>
+
+                <td>@driv.Id</td>
+                <td>@driv.FirstName</td>
+                <td>@driv.LastName</td>
+                <td>@driv.Category</td>
+                <td>@driv.Phone</td>
+                <td>@driv.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Bus/ManageDriver/Edit?id=@driv.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Bus/ManageDriver/Delete?id=@driv.Id">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

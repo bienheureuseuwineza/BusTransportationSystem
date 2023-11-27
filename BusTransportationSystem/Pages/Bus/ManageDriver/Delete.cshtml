@@ -1,0 +1,33 @@
+﻿@page
+@using System.Data.SqlClient
+@{
+    String id = Request.Query["id"];
+    string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+
+    try
+    {
+        using (SqlConnection con = new SqlConnection(connString))
+        {
+            string qry = "DELETE FROM Driver WHERE id = @DriverId";
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand(qry, con))
+            {
+                cmd.Parameters.AddWithValue("@DriverId", id);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("Driver deleted successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to delete driver");
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error" + ex.Message);
+    }
+    Response.Redirect("/Bus/ManageDriver/Index");
+}
