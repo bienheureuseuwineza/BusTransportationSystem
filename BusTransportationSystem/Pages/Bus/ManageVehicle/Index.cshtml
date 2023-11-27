@@ -1,0 +1,35 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageVehicle.IndexModel
+@{
+}
+
+<h2>List of Vehicles</h2>
+<a class="btn btn-primary btn-sm" href="/Bus/ManageVehicle/Create">New Vehicle</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Vehicle Name</th>
+            <th>Driver ID</th>
+            <th>Vehicle Types</th>
+            <th>Seats</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Model.VehicleList)
+        {
+            <tr>
+                <td>@vehicle.VehicleId</td>
+                <td>@vehicle.VehicleName</td>
+                <td>@vehicle.DriverId</td>
+                <td>@vehicle.VehicleTypes</td>
+                <td>@vehicle.Seats</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Bus/ManageVehicle/Edit?id=@vehicle.VehicleId">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Bus/ManageVehicle/Delete?id=@vehicle.VehicleId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
