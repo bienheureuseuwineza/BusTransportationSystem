@@ -1,0 +1,39 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageTrip.IndexModel
+@{
+}
+
+<h2>List of Trips</h2>
+<a class="btn btn-primary btn-sm" href="/Bus/ManageTrip/Create">New Trip</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Trip ID</th>
+            <th>Driver ID</th>
+            <th>Vehicle ID</th>
+            <th>Initial Destination</th>
+            <th>Final Destination</th>
+            <th>Price</th>
+            <th>Trip Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var trip in Model.TripList)
+        {
+            <tr>
+                <td>@trip.TripId</td>
+                <td>@trip.DriverId</td>
+                <td>@trip.VehicleId</td>
+                <td>@trip.InitDestination</td>
+                <td>@trip.FinalDestination</td>
+                <td>@trip.Price</td>
+                <td>@trip.TripDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Bus/ManageTrip/Edit?id=@trip.TripId">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Bus/ManageTrip/Delete?id=@trip.TripId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

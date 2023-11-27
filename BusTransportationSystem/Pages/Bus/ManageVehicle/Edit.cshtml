@@ -1,0 +1,67 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageVehicle.EditModel
+@{
+}
+
+<br />
+<h2>Edit Vehicle</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+}
+<form method="POST">
+    <input type="hidden" name="id" value="@Model.vehicleInfo.VehicleId" />
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="vehicleName">Vehicle Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="vehicleName" placeholder="Vehicle Name" value="@Model.vehicleInfo.VehicleName">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="driverId">Driver ID</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="driverId" placeholder="Driver ID" value="@Model.vehicleInfo.DriverId">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="vehicleTypes">Vehicle Type</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="vehicleTypes" placeholder="Vehicle Type" value="@Model.vehicleInfo.VehicleTypes">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="seats">Number of Seats</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="seats" placeholder="Number of Seats" value="@Model.vehicleInfo.Seats">
+        </div>
+    </div>
+
+    <!-- Add other form fields for Vehicle as needed -->
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.successMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row mb-3">
+        <div class="offset-sm-4 col-sm-4 d-grid">
+            <button type="submit" class="btn btn-primary">Edit Vehicle</button>
+        </div>
+        <div class="offset-sm-4 col-sm-4 d-grid">
+            <a class="btn btn-outline-primary" href="/Bus/ManageVehicle/Index" role="button">Go Back</a>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,34 @@
+﻿@page
+@using System.Data.SqlClient
+@{
+    String id = Request.Query["id"];
+    string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+
+    try
+    {
+        using (SqlConnection con = new SqlConnection(connString))
+        {
+            string qry = "DELETE FROM Stops WHERE id = @StopId";
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand(qry, con))
+            {
+                cmd.Parameters.AddWithValue("@StopId", id);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("Stop deleted successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to delete stop");
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error" + ex.Message);
+    }
+    Response.Redirect("/Bus/ManageStop/Index");
+}
+

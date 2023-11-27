@@ -1,0 +1,81 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageTrip.EditModel
+@{
+}
+<br />
+<h2>Edit Trip</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+}
+
+<form method="POST">
+    <input type="hidden" name="id" value="@Model.tripInfo.TripId" />
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="driverId">Driver ID</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="driverId" placeholder="Driver ID" value="@Model.tripInfo.DriverId">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="vehicleId">Vehicle ID</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="vehicleId" placeholder="Vehicle ID" value="@Model.tripInfo.VehicleId">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="initDestination">Initial Destination</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="initDestination" placeholder="Initial Destination" value="@Model.tripInfo.InitDestination">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="finalDestination">Final Destination</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="finalDestination" placeholder="Final Destination" value="@Model.tripInfo.FinalDestination">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="price">Price</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="price" placeholder="Price" value="@Model.tripInfo.Price">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="tripDate">Trip Date</label>
+        <div class="col-sm-6">
+            <input type="date" class="form-control" name="tripDate" value="@Model.tripInfo.TripDate.ToString("yyyy-MM-dd")">
+        </div>
+    </div>
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.successMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-4 d-grid">
+            <button type="submit" class="btn btn-primary">Edit Trip</button>
+        </div>
+        <div class="offset-sm-3 col-sm-4 d-grid">
+            <a class="btn btn-outline-primary" href="/Bus/ManageTrip/Index" role="button">Go Back</a>
+        </div>
+    </div>
+</form>

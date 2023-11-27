@@ -1,0 +1,71 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageDriver.CreateModel
+@{
+}
+<br/>
+<h2>New Driver</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+}
+<form method="POST">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="firstName">First Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="firstName" placeholder="First Name" value="@Model.newDriver.FirstName">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="lastName">Last Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="lastName" placeholder="Last Name" value="@Model.newDriver.LastName">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="driverCategory">Driver Category</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="driverCategory" placeholder="Driver Category" value="@Model.newDriver.Category">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="phone">Phone</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="phone" placeholder="Phone" value="@Model.newDriver.Phone">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label" for="dob">Date of Birth</label>
+        <div class="col-sm-6">
+            <input type="date" class="form-control" name="dob" value="@Model.newDriver.DateOfBirth.ToString("yyyy-MM-dd")">
+        </div>
+    </div>
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.successMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-4 d-grid">
+            <button type="submit" class="btn btn-primary">Add Driver</button>
+        </div>
+        <div class="offset-sm-3 col-sm-4 d-grid">
+            <a class="btn btn-outline-primary" href="/Bus/ManageDriver/Index" role="button">Go back</a>
+        </div>
+    </div>
+</form>
