@@ -1,0 +1,30 @@
+﻿@page
+@model BusTransportationSystem.Pages.Bus.ManageStops.IndexModel
+@{
+}
+<h2>List of Bus Stations</h2>
+<a class="btn btn-primary btn-sm" href="/Bus/ManageStop/Create">New Stop</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stop ID</th>
+            <th>Stops Destination</th>
+            <th>Trip ID</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stop in Model.StopList)
+        {
+            <tr>
+                <td>@stop.Id</td>
+                <td>@stop.StopsDestination</td>
+                <td>@stop.TripId</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Bus/ManageStop/Edit?id=@stop.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Bus/ManageStop/Delete?id=@stop.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
