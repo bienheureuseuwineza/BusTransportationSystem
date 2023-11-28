@@ -4,6 +4,8 @@ using BusTransportationSystem.Pages.Bus.ManageDriver;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using System.Reflection;
+using System.Text;
 
 namespace BusTransportationSystem.Pages
 {
@@ -41,82 +43,59 @@ namespace BusTransportationSystem.Pages
 		}
 
 
+		[BindProperty(Name = "initDestination")]
+		public string InitDestination { get; set; }
+
+
+		[BindProperty(Name = "finalDestination")]
+		public string FinalDestination { get; set; }
+
+		[HttpPost]
+		public ContentResult OnPost()
+		{
+			// Process form data
+			OnGet();
+
+			// Filter trips based on selected destinations
+			var filteredTrips = UserTripList
+				.Where(t => t.InitDestination == InitDestination && t.FinalDestination == FinalDestination)
+				.ToList();
+
+			// Render the filtered trips as HTML
+			var htmlContent = RenderFilteredTripsAsHtml(filteredTrips);
+
+			return new ContentResult
+			{
+				ContentType = "text/html",
+				Content = htmlContent,
+			};
+		}
+
+		private string RenderFilteredTripsAsHtml(List<Trip> filteredTrips)
+		{
+			// Use StringBuilder or another method to construct the HTML string
+			StringBuilder htmlBuilder = new StringBuilder();
+
+			htmlBuilder.Append("<tbody>");
+			foreach (var trip in filteredTrips)
+			{
+				htmlBuilder.Append("<tr>");
+				htmlBuilder.Append($"<td>{trip.VehicleName}</td>");
+				htmlBuilder.Append($"<td>{trip.InitDestination}</td>");
+				htmlBuilder.Append($"<td>{trip.FinalDestination}</td>");
+				htmlBuilder.Append($"<td>{trip.Price}</td>");
+				htmlBuilder.Append($"<td>{trip.TripDate}</td>");
+				htmlBuilder.Append("</tr>");
+			}
+			htmlBuilder.Append("</tbody>");
+
+			return htmlBuilder.ToString();
+		}
+
+		[HttpGet]
 		public void OnGet()
 		{
-			/*// Display the list of Vehicles
-			VehicleList.Clear();
-
-			try
-			{
-				using (SqlConnection con = new SqlConnection(connString))
-				{
-					// Retrieve Vehicles
-					string vehicleQuery = "SELECT * FROM Vehicle";
-					con.Open();
-					using (SqlCommand vehicleCmd = new SqlCommand(vehicleQuery, con))
-					{
-						using (SqlDataReader vehicleReader = vehicleCmd.ExecuteReader())
-						{
-							while (vehicleReader.Read())
-							{
-								Vehicle vehicle = new Vehicle
-								{
-									VehicleId = vehicleReader.GetInt32(0),
-									VehicleName = vehicleReader.GetString(1),
-									DriverId = vehicleReader.GetInt32(2),
-									VehicleTypes = vehicleReader.GetString(3),
-									Seats = vehicleReader.GetInt32(4)
-								};
-								VehicleList.Add(vehicle);
-							}
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("error" + ex.Message);
-			}
-
-			// Display the list of Drivers
-			DriverList.Clear();
-
-
-			try
-			{
-				using (SqlConnection con = new SqlConnection(connString))
-				{
-
-					// Retrieve Drivers
-					string driverQuery = "SELECT * FROM Driver";
-					con.Open();
-					using (SqlCommand driverCmd = new SqlCommand(driverQuery, con))
-					{
-						using (SqlDataReader driverReader = driverCmd.ExecuteReader())
-						{
-							while (driverReader.Read())
-							{
-								Driver driver = new Driver
-								{
-									Id = driverReader.GetInt32(0),
-									FirstName = driverReader.GetString(1),
-									LastName = driverReader.GetString(2),
-									Category = driverReader.GetString(3),
-									Phone = driverReader.GetString(4),
-									DateOfBirth = driverReader.GetDateTime(5)
-								};
-								DriverList.Add(driver);
-							}
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine("error" + ex.Message);
-			}
-
-			*/
+			
 
 			// Display the list of Trips
 			UserTripList.Clear();
@@ -129,10 +108,14 @@ namespace BusTransportationSystem.Pages
 				using (SqlConnection con = new SqlConnection(connString))
 				{
 					// Retrieve Trips
+					// Retrieve Trips based on selected initial and final destinations
 					string tripQuery = "SELECT * FROM Trip";
 					con.Open();
 					using (SqlCommand tripCmd = new SqlCommand(tripQuery, con))
 					{
+						//tripCmd.Parameters.AddWithValue("@InitDestination", InitDestination);
+						//tripCmd.Parameters.AddWithValue("@FinalDestination", FinalDestination);
+
 						using (SqlDataReader tripReader = tripCmd.ExecuteReader())
 						{
 							while (tripReader.Read())

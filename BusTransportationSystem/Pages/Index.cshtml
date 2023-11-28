@@ -135,7 +135,7 @@
 
 				<div id="panel1" class="search_panel active">
 
-					<form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+					<form action="/Index" method="POST" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
 						<div class="search_item">
 							<div>Initial destination</div>
 							<select name="initDestination" id="adults_1" class="dropdown_item_select search_input" required="required">
@@ -169,7 +169,7 @@
 					<form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
 					
 					
-					<table class="table">
+					<table id="tripsTable" class="table">
 						<thead>
 							<tr>
 								<th>Vehicle Name</th>
@@ -241,6 +241,60 @@
 			</div>
 		</div>		
 	</div>
+@*
+<script>
+	// Create a copy of the original UserTripList
+	var originalUserTripList = [...Model.UserTripList];
+
+	function showPanel(panelId) {
+		// Hide all panels
+		document.querySelectorAll('.search_panel').forEach(panel => {
+			panel.classList.remove('active');
+		});
+
+		// Show the selected panel
+		document.getElementById(panelId).classList.add('active');
+
+		if (panelId === 'panel2') {
+			// Iterate through table rows to find the initial and final destinations
+			var tableRows = document.querySelectorAll('#panel2 .table tbody tr');
+			var selectedInitDestination, selectedFinalDestination;
+
+			tableRows.forEach(row => {
+				selectedInitDestination = row.querySelector('td:nth-child(2)').textContent.trim();
+				selectedFinalDestination = row.querySelector('td:nth-child(3)').textContent.trim();
+			});
+
+			// If the selected panel is the Trip panel, filter the UserTripList based on selected destinations
+			Model.UserTripList = originalUserTripList.filter(trip => {
+				return trip.InitDestination === selectedInitDestination && trip.FinalDestination === selectedFinalDestination;
+			});
+
+			// Update the table with the filtered UserTripList
+			updateTripTable();
+		}
+	}
+
+	function updateTripTable() {
+		var tableBody = document.querySelector('#panel2 .table tbody');
+		// Clear existing rows from the table
+		tableBody.innerHTML = '';
+
+		// Populate the table with the filtered UserTripList
+		Model.UserTripList.forEach(trip => {
+			var row = document.createElement('tr');
+			row.innerHTML = `
+						<td>${trip.VehicleName}</td>
+						<td>${trip.InitDestination}</td>
+						<td>${trip.FinalDestination}</td>
+						<td>${trip.Price}</td>
+						<td>${trip.TripDate}</td>
+					`;
+			tableBody.appendChild(row);
+		});
+	}
+</script>
+
 
 <script>
 	function showPanel(panelId) {
@@ -253,6 +307,38 @@
 		document.getElementById(panelId).classList.add('active');
 	}
 </script>
+*@
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// Intercept form submission
+		$('#search_form_1').submit(function (e) {
+			e.preventDefault(); // Prevent the form from submitting normally
+
+			// Get selected values
+			var initDestination = $('#adults_1').val();
+			var finalDestination = $('#children_1').val();
+
+			// Send AJAX request to get filtered trips
+			$.ajax({
+				type: 'POST',
+				url: '/Index',
+				data: { initDestination: initDestination, finalDestination: finalDestination },
+				success: function (data) {
+					// Update the table with the filtered trips
+					$('#tripsTable tbody').html(data);
+					// Show the panel with the updated table
+					showPanel('panel2');
+				},
+				error: function () {
+					console.log('Error in AJAX request');
+				}
+			});
+		});
+	});
+</script>
+
 
 	<!-- Intro -->
 	
