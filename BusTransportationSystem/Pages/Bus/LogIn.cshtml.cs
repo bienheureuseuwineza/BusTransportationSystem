@@ -9,14 +9,14 @@ namespace BusTransportationSystem.Pages.Bus
 {
     public class LogInModel : PageModel
     {
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+        string connString = "Data Source=.;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
         public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
         public void OnGet()
         {
         }
-        public void OnPost() 
+        public IActionResult OnPost() 
         {
 
             user.email = Request.Form["email"];
@@ -39,19 +39,21 @@ namespace BusTransportationSystem.Pages.Bus
                         if (reader.HasRows)
                         {
                             reader.Read();
-                            string role = reader.GetString(5);
+                            string role = reader.GetString(1);
 
                             // Store role in session
-                            HttpContext.Session.SetString("role", role);
-
-                            // Redirect to different page based on role
-                            if (role.Equals("ADMIN"))
+                            if (HttpContext != null && HttpContext.Session != null)
                             {
-                                Response.Redirect("/Bus/AdminDashboard");
+                                HttpContext.Session.SetString("role", role);
+                            }
+                            if (string.Equals(role, "ADMIN", StringComparison.OrdinalIgnoreCase))
+                            {
+                              
+                                return RedirectToPage("/Bus/AdminDashboard");
                             }
                             else
                             {
-                                Response.Redirect("/Bus/UserDashboard");
+                                return RedirectToPage("/Bus/UserDashboard");
                             }
 
 
@@ -62,7 +64,7 @@ namespace BusTransportationSystem.Pages.Bus
                             message = "Invalid email or password";
                         }
                     }
-
+                    return Page();
 
                 }
                 con.Close();

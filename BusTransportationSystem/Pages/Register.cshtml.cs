@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
@@ -6,7 +7,7 @@ namespace BusTransportationSystem.Pages
 {
     public class RegisterModel : PageModel
     {
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+        string connString = "Data Source=.;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
         public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
@@ -41,6 +42,9 @@ namespace BusTransportationSystem.Pages
                 message = "Passwords do not match";
                 return;
             }
+            var passwordHasher = new PasswordHasher<User>(); // User is your user model
+            user.password = passwordHasher.HashPassword(null, user.password);
+
             using (SqlConnection con = new SqlConnection(connString))
             {
                 string qry = "INSERT INTO [User] (firstname, lastname, gender, email, dob, password) " +
@@ -58,12 +62,12 @@ namespace BusTransportationSystem.Pages
                     cmd.Parameters.AddWithValue("@password", user.password);
 
 
-                    int newUserId = Convert.ToInt32(cmd.ExecuteScalar());
+                    int newUserId = cmd.ExecuteNonQuery();
 
                     if (newUserId > 0)
                     {
                         message = "User created with ID: " + newUserId;
-                        Response.Redirect("/Bus/LogIn");
+                        Response.Redirect("/Index");
                         return;
                     }
                     else
