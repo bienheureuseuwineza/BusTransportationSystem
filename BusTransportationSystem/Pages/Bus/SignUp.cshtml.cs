@@ -61,17 +61,17 @@ namespace BusTransportationSystem.Pages.Bus
                    
                 int newUserId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                if (newUserId > 0)
-                {
-                    message = "User created with ID: " + newUserId;
-                    Response.Redirect("/Bus/LogIn"); 
-                    return;
-                }
-                else
-                {
-                    message = "User not created";
+                    if (newUserId > 0)
+                    {
+                        message = "User created with ID: " + newUserId;
+                        Response.Redirect("/Bus/LogIn"); 
+                        return;
+                    }
+                    else
+                    {
+                        message = "User not created";
                    
-                }
+                    }
 
             }
                 con.Close();
