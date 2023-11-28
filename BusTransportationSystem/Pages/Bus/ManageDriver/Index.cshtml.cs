@@ -1,3 +1,4 @@
+using BusTransportationSystem.Pages.Bus.ManageTrip;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
@@ -9,7 +10,9 @@ namespace BusTransportationSystem.Pages.Bus.ManageDriver
         string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
 
         public List<Driver> DriverList = new List<Driver>();
-        public void OnGet()
+		
+
+		public void OnGet()
         {
             // Display the list of Drivers
             DriverList.Clear();
@@ -48,9 +51,8 @@ namespace BusTransportationSystem.Pages.Bus.ManageDriver
             {
                 Console.WriteLine("error" + ex.Message);
             }
-
- 
-        }
+			
+		}
 
     }
     public class Driver

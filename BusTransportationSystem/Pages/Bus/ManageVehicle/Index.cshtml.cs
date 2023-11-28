@@ -49,12 +49,12 @@ namespace BusTransportationSystem.Pages.Bus.ManageVehicle
         }
     }
 
-    public class Vehicle
-    {
-        public int VehicleId { get; set; }
-        public string VehicleName { get; set; }
-        public int DriverId { get; set; }
-        public string VehicleTypes { get; set; }
-        public int Seats { get; set; }
-    }
+	public class Vehicle
+	{
+		public int VehicleId { get; set; }
+		public string VehicleName { get; set; }
+		public int DriverId { get; set; }
+		public string VehicleTypes { get; set; }
+		public int Seats { get; set; }
+	}
 }

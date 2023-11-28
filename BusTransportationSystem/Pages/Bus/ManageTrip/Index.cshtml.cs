@@ -10,13 +10,16 @@ namespace BusTransportationSystem.Pages.Bus.ManageTrip
 
         public List<Trip> TripList = new List<Trip>();
 
-        public void OnGet()
+		
+
+		public void OnGet()
         {
             // Display the list of Trips
             TripList.Clear();
+			
 
-            try
-            {
+			//try
+            //{
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     // Retrieve Trips
@@ -35,19 +38,22 @@ namespace BusTransportationSystem.Pages.Bus.ManageTrip
                                     VehicleId = tripReader.GetInt32(2),
                                     InitDestination = tripReader.GetString(3),
                                     FinalDestination = tripReader.GetString(4),
-                                    Price = tripReader.GetFloat(5),
+                                    Price = tripReader.GetDouble(5),
                                     TripDate = tripReader.GetDateTime(6)
                                 };
                                 TripList.Add(trip);
-                            }
+
+                            
+
                         }
                     }
+                    }
                 }
-            }
-            catch (Exception ex)
+            //}
+/*            catch (Exception ex)
             {
                 Console.WriteLine("error" + ex.Message);
-            }
+            }*/
         }
     }
 
@@ -56,9 +62,11 @@ namespace BusTransportationSystem.Pages.Bus.ManageTrip
         public int TripId { get; set; }
         public int DriverId { get; set; }
         public int VehicleId { get; set; }
-        public string InitDestination { get; set; }
+		public string VehicleName { get; set; }
+		public string InitDestination { get; set; }
         public string FinalDestination { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         public DateTime TripDate { get; set; }
     }
+	
 }
