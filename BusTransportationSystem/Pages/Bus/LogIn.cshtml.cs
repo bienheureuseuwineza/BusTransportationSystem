@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Intrinsics.Arm;
+using Microsoft.AspNetCore.Http;
 
 namespace BusTransportationSystem.Pages.Bus
 {
@@ -35,8 +38,23 @@ namespace BusTransportationSystem.Pages.Bus
                     {
                         if (reader.HasRows)
                         {
-                            
-                            Response.Redirect("/Bus/AdminDashboard");
+                            reader.Read();
+                            string role = reader.GetString(5);
+
+                            // Store role in session
+                            HttpContext.Session.SetString("role", role);
+
+                            // Redirect to different page based on role
+                            if (role.Equals("ADMIN"))
+                            {
+                                Response.Redirect("/Bus/AdminDashboard");
+                            }
+                            else
+                            {
+                                Response.Redirect("/Bus/UserDashboard");
+                            }
+
+
                         }
                         else
                         {
