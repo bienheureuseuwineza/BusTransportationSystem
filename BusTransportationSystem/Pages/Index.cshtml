@@ -122,156 +122,117 @@
 					<div class="search_tabs_container">
 						<div  class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
 						
-						<div onclick="showPanel('panel1')" class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/bus.png" alt="">Vehicles</div>
+						<div onclick="showPanel('panel1')" class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/bus.png" alt="">Your Location</div>
 						
 						<div onclick="showPanel('panel2')" class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/island.png" alt="">Trips</div>
 						
 						<div onclick="showPanel('panel3')" class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/diving.png" alt="">Drivers</div>
 						</div>		
 					</div>
-
-					<!-- Search Panel -->
-					<div >
-
-					</div>
-				<div class="search_item">
-					List of Vehicles</div>
 				
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Vehicle ID</th>
-							<th>Vehicle Name</th>
-							<th>Driver ID</th>
-							<th>Vehicle Types</th>
-							<th>Seats</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody class="search_item">
-						@foreach (var vehicle in Model.VehicleList)
-						{
-							<tr>
-								<td>@vehicle.VehicleId</td>
-								<td>@vehicle.VehicleName</td>
-								<td>@vehicle.DriverId</td>
-								<td>@vehicle.VehicleTypes</td>
-								<td>@vehicle.Seats</td>
-								<td>
-									<a class="btn btn-primary btn-sm" href="/Bus/ManageVehicle/Edit?id=@vehicle.VehicleId">Edit</a>
-									<a class="btn btn-danger btn-sm" href="/Bus/ManageVehicle/Delete?id=@vehicle.VehicleId">Delete</a>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
 
-					<!-- Search Panel -->
+				<!-- Search Panel -->
 
 				<div id="panel1" class="search_panel active">
-						<form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-							<div class="search_item">
-								<div>destination</div>
-								<input type="text" class="destination search_input" required="required">
-							</div>
-							<div class="search_item">
-								<div>check in</div>
-								<input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>check out</div>
-								<input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>adults</div>
-								<select name="adults" id="adults_1" class="dropdown_item_select search_input">
-									<option>01</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<div class="search_item">
-								<div>children</div>
-								<select name="children" id="children_1" class="dropdown_item_select search_input">
-									<option>0</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<button class="button search_button">search<span></span><span></span><span></span></button>
-						</form>
+
+					<form action="/Index" method="POST" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+						<div class="search_item">
+							<div>Initial destination</div>
+							<select name="initDestination" id="adults_1" class="dropdown_item_select search_input" required="required">
+								@foreach (var initDestination in Model.InitDestinations)
+								{
+									<option>@initDestination</option>
+								}
+							</select>
+						</div>
+
+						<div class="search_item">
+							<div>Final destination</div>
+							<select name="finalDestination" id="children_1" class="dropdown_item_select search_input" required="required">
+								@foreach (var finalDestination in Model.FinalDestinations)
+								{
+									<option>@finalDestination</option>
+								}
+							</select>
+						</div>
+						
+						<button class="button search_button" onclick="showPanel('panel2')">Continue<span></span><span></span><span></span></button>
+					</form>
+					
+					   
 					</div>
 
 					<!-- Search Panel -->
 
 				<div id="panel2" class="search_panel">
-						<form action="#" id="search_form_2" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-							<div class="search_item">
-								<div>destination</div>
-								<input type="text" class="destination search_input" required="required">
-							</div>
-							<div class="search_item">
-								<div>check in</div>
-								<input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>check out</div>
-								<input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>adults</div>
-								<select name="adults" id="adults_2" class="dropdown_item_select search_input">
-									<option>01</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<div class="search_item">
-								<div>children</div>
-								<select name="children" id="children_2" class="dropdown_item_select search_input">
-									<option>0</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<button class="button search_button">search<span></span><span></span><span></span></button>
-						</form>
+					
+					<form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+					
+					
+					<table id="tripsTable" class="table">
+						<thead>
+							<tr>
+								<th>Vehicle Name</th>
+								<th>Initial Destination</th>
+								<th>Final Destination</th>
+								<th>Price</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- You can use Model.Trips to populate the table -->
+							@foreach (var trip in Model.UserTripList)
+							{
+								<tr>
+									<td>@trip.VehicleName</td>
+									<td>@trip.InitDestination</td>
+									<td>@trip.FinalDestination</td>
+									<td>@trip.Price</td>
+									<td>@trip.TripDate</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+						<button class="button search_button" onclick="showPanel('panel1')">Go Back<span></span><span></span><span></span></button>
+						<button class="button search_button" onclick="showPanel('panel3')" >Continue<span></span><span></span><span></span></button>
+					</form>
 					</div>
 
 					<!-- Search Panel -->
 
-					<div class="search_panel">
-						<form action="#" id="search_form_3" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-							<div class="search_item">
-								<div>destination</div>
-								<input type="text" class="destination search_input" required="required">
-							</div>
-							<div class="search_item">
-								<div>check in</div>
-								<input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>check out</div>
-								<input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="search_item">
-								<div>adults</div>
-								<select name="adults" id="adults_3" class="dropdown_item_select search_input">
-									<option>01</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<div class="search_item">
-								<div>children</div>
-								<select name="children" id="children_3" class="dropdown_item_select search_input">
-									<option>0</option>
-									<option>02</option>
-									<option>03</option>
-								</select>
-							</div>
-							<button class="button search_button">search<span></span><span></span><span></span></button>
-						</form>
+				<div id="panel3" class="search_panel">
+					<h2>List of Drivers</h2>
+					
+					@**<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>FirstName</th>
+								<th>LastName</th>
+								<th>Category</th>
+								<th>Phone</th>
+								<th>DateOfBirth</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var driv in Model.DriverList)
+							{
+								<tr>
+
+									<td>@driv.Id</td>
+									<td>@driv.FirstName</td>
+									<td>@driv.LastName</td>
+									<td>@driv.Category</td>
+									<td>@driv.Phone</td>
+									<td>@driv.DateOfBirth.ToString("yyyy-MM-dd")</td>
+									
+
+								</tr>
+							}
+						</tbody>
+					</table>*@
+
 					</div>
 
 
@@ -280,6 +241,104 @@
 			</div>
 		</div>		
 	</div>
+@*
+<script>
+	// Create a copy of the original UserTripList
+	var originalUserTripList = [...Model.UserTripList];
+
+	function showPanel(panelId) {
+		// Hide all panels
+		document.querySelectorAll('.search_panel').forEach(panel => {
+			panel.classList.remove('active');
+		});
+
+		// Show the selected panel
+		document.getElementById(panelId).classList.add('active');
+
+		if (panelId === 'panel2') {
+			// Iterate through table rows to find the initial and final destinations
+			var tableRows = document.querySelectorAll('#panel2 .table tbody tr');
+			var selectedInitDestination, selectedFinalDestination;
+
+			tableRows.forEach(row => {
+				selectedInitDestination = row.querySelector('td:nth-child(2)').textContent.trim();
+				selectedFinalDestination = row.querySelector('td:nth-child(3)').textContent.trim();
+			});
+
+			// If the selected panel is the Trip panel, filter the UserTripList based on selected destinations
+			Model.UserTripList = originalUserTripList.filter(trip => {
+				return trip.InitDestination === selectedInitDestination && trip.FinalDestination === selectedFinalDestination;
+			});
+
+			// Update the table with the filtered UserTripList
+			updateTripTable();
+		}
+	}
+
+	function updateTripTable() {
+		var tableBody = document.querySelector('#panel2 .table tbody');
+		// Clear existing rows from the table
+		tableBody.innerHTML = '';
+
+		// Populate the table with the filtered UserTripList
+		Model.UserTripList.forEach(trip => {
+			var row = document.createElement('tr');
+			row.innerHTML = `
+						<td>${trip.VehicleName}</td>
+						<td>${trip.InitDestination}</td>
+						<td>${trip.FinalDestination}</td>
+						<td>${trip.Price}</td>
+						<td>${trip.TripDate}</td>
+					`;
+			tableBody.appendChild(row);
+		});
+	}
+</script>
+
+
+<script>
+	function showPanel(panelId) {
+		// Hide all panels
+		document.querySelectorAll('.search_panel').forEach(panel => {
+			panel.classList.remove('active');
+		});
+
+		// Show the selected panel
+		document.getElementById(panelId).classList.add('active');
+	}
+</script>
+*@
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// Intercept form submission
+		$('#search_form_1').submit(function (e) {
+			e.preventDefault(); // Prevent the form from submitting normally
+
+			// Get selected values
+			var initDestination = $('#adults_1').val();
+			var finalDestination = $('#children_1').val();
+
+			// Send AJAX request to get filtered trips
+			$.ajax({
+				type: 'POST',
+				url: '/Index',
+				data: { initDestination: initDestination, finalDestination: finalDestination },
+				success: function (data) {
+					// Update the table with the filtered trips
+					$('#tripsTable tbody').html(data);
+					// Show the panel with the updated table
+					showPanel('panel2');
+				},
+				error: function () {
+					console.log('Error in AJAX request');
+				}
+			});
+		});
+	});
+</script>
+
 
 	<!-- Intro -->
 	
@@ -377,19 +436,8 @@
 			</div>
 		</div>
 	</div>
+	
 
-
-<script>
-	function showPanel(panelId) {
-		// Hide all panels
-		document.querySelectorAll('.search_panel').forEach(panel => {
-			panel.classList.remove('active');
-		});
-
-		// Show the selected panel
-		document.getElementById(panelId).classList.add('active');
-	}
-</script>
 
 	<!-- CTA -->
 
