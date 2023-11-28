@@ -1,13 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.Intrinsics.Arm;
-using Microsoft.AspNetCore.Http;
+using System.Reflection.PortableExecutable;
 
-namespace BusTransportationSystem.Pages.Bus
+namespace BusTransportationSystem.Pages
 {
-    public class LogInModel : PageModel
+    public class LoginModel : PageModel
     {
         string connString = "Data Source=.;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
         public User user = new User();
@@ -16,60 +15,63 @@ namespace BusTransportationSystem.Pages.Bus
         public void OnGet()
         {
         }
-        public IActionResult OnPost() 
+        public IActionResult OnPost()
         {
-
             user.email = Request.Form["email"];
             user.password = Request.Form["password"];
 
-         
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "SELECT email, password FROM [User] WHERE email = @email AND password = @password";
+                string qry = "SELECT email, password FROM [User] WHERE email = @email";
                 con.Open();
 
                 using (SqlCommand cmd = new SqlCommand(qry, con))
                 {
-
                     cmd.Parameters.AddWithValue("@email", user.email);
-                    cmd.Parameters.AddWithValue("@password", user.password);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
                             reader.Read();
-                            string role = reader.GetString(1);
+                            string storedPasswordHash = reader.GetString(1);
 
-                            // Store role in session
-                            if (HttpContext != null && HttpContext.Session != null)
+                            var passwordHasher = new PasswordHasher<User>();
+                            var result = passwordHasher.VerifyHashedPassword(null, storedPasswordHash, user.password);
+
+                            if (result == PasswordVerificationResult.Success)
                             {
-                                HttpContext.Session.SetString("role", role);
-                            }
-                            if (string.Equals(role, "ADMIN", StringComparison.OrdinalIgnoreCase))
-                            {
-                              
-                                return RedirectToPage("/Bus/AdminDashboard");
+                                string role = reader.GetString(1);
+								//HttpContext.Session.SetString("username", user.email);
+
+
+								// Redirect to different page based on role
+								if (role.Equals("ADMIN"))
+                                {
+                                    return RedirectToPage("/Bus/AdminDashboard");
+                                }
+                                else
+                                {
+                                    return RedirectToPage("/Index");
+                                }
                             }
                             else
                             {
-                                return RedirectToPage("/Bus/UserDashboard");
+                                message = "Invalid email or password";
                             }
-
-
                         }
                         else
                         {
-                            
                             message = "Invalid email or password";
                         }
                     }
-                    return Page();
-
                 }
                 con.Close();
             }
+
+            return Page();
         }
+
         public class User
         {
             public int? id { get; set; }
