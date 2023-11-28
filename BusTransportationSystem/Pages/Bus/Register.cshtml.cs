@@ -47,8 +47,8 @@ namespace BusTransportationSystem.Pages
 
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, dob, password) " +
-                     "VALUES (@firstname, @lastname, @gender, @email, @dob, @password); " +
+                string qry = "INSERT INTO [User] (firstname, lastname, gender, email,role, dob, password) " +
+                     "VALUES (@firstname, @lastname, @gender, @email,'Client' @dob, @password); " +
                      "SELECT SCOPE_IDENTITY();";
                 con.Open();
 
