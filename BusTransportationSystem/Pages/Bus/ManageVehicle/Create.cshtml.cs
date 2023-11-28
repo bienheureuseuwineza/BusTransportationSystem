@@ -19,6 +19,22 @@ namespace BusTransportationSystem.Pages.Bus.ManageVehicle
 
         public void OnPost()
         {
+
+            var userRole = HttpContext.Session.GetString("role");
+
+            if (userRole != null && userRole.Equals("ADMIN"))
+            {
+
+            }
+
+            else
+            {
+                // Redirect unauthorized users or show an error message
+                Response.Redirect("/Bus/UnauthorizedAccess");
+                
+                // errorMessage = "Unauthorized access";
+
+            }
             // Add a new vehicle
             newVehicle.VehicleName = Request.Form["vehicleName"];
             newVehicle.DriverId = int.Parse(Request.Form["driverId"]);

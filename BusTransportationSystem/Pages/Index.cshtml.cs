@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusTransportationSystem.Pages.Bus.ManageTrip;
+using BusTransportationSystem.Pages.Bus.ManageVehicle;
+using BusTransportationSystem.Pages.Bus.ManageDriver;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data.SqlClient;
+using System.Reflection;
+using System.Text;
 
 namespace BusTransportationSystem.Pages
 {
@@ -12,9 +18,144 @@ namespace BusTransportationSystem.Pages
             _logger = logger;
         }
 
-        public void OnGet()
-        {
+		string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
 
-        }
-    }
+		public List<Vehicle> VehicleList = new List<Vehicle>();
+
+		public List<Trip> UserTripList = new List<Trip>();
+		public List<string> InitDestinations = new List<string>();
+		public List<string> FinalDestinations = new List<string>();
+
+		public List<Driver> DriverList = new List<Driver>();
+
+		private string GetVehicleName(int vehicleId)
+		{
+			using (SqlConnection con = new SqlConnection(connString))
+			{
+				con.Open();
+				string vehicleQuery = "SELECT Vehicle_name FROM Vehicle WHERE Vehicle_id= @VehicleId";
+				using (SqlCommand vehicleCmd = new SqlCommand(vehicleQuery, con))
+				{
+					vehicleCmd.Parameters.AddWithValue("@VehicleId", vehicleId);
+					return vehicleCmd.ExecuteScalar()?.ToString();
+				}
+			}
+		}
+
+
+		[BindProperty(Name = "initDestination")]
+		public string InitDestination { get; set; }
+
+
+		[BindProperty(Name = "finalDestination")]
+		public string FinalDestination { get; set; }
+
+		[HttpPost]
+		public ContentResult OnPost()
+		{
+			// Process form data
+			OnGet();
+
+			// Filter trips based on selected destinations
+			var filteredTrips = UserTripList
+				.Where(t => t.InitDestination == InitDestination && t.FinalDestination == FinalDestination)
+				.ToList();
+
+			// Render the filtered trips as HTML
+			var htmlContent = RenderFilteredTripsAsHtml(filteredTrips);
+
+			return new ContentResult
+			{
+				ContentType = "text/html",
+				Content = htmlContent,
+			};
+		}
+
+		private string RenderFilteredTripsAsHtml(List<Trip> filteredTrips)
+		{
+			// Use StringBuilder or another method to construct the HTML string
+			StringBuilder htmlBuilder = new StringBuilder();
+
+			htmlBuilder.Append("<tbody>");
+			foreach (var trip in filteredTrips)
+			{
+				htmlBuilder.Append("<tr>");
+				htmlBuilder.Append($"<td>{trip.VehicleName}</td>");
+				htmlBuilder.Append($"<td>{trip.InitDestination}</td>");
+				htmlBuilder.Append($"<td>{trip.FinalDestination}</td>");
+				htmlBuilder.Append($"<td>{trip.Price}</td>");
+				htmlBuilder.Append($"<td>{trip.TripDate}</td>");
+				htmlBuilder.Append("</tr>");
+			}
+			htmlBuilder.Append("</tbody>");
+
+			return htmlBuilder.ToString();
+		}
+
+		[HttpGet]
+		public void OnGet()
+		{
+			
+
+			// Display the list of Trips
+			UserTripList.Clear();
+
+			InitDestinations.Clear();
+			FinalDestinations.Clear();
+
+			try
+			{
+				using (SqlConnection con = new SqlConnection(connString))
+				{
+					// Retrieve Trips
+					// Retrieve Trips based on selected initial and final destinations
+					string tripQuery = "SELECT * FROM Trip";
+					con.Open();
+					using (SqlCommand tripCmd = new SqlCommand(tripQuery, con))
+					{
+						//tripCmd.Parameters.AddWithValue("@InitDestination", InitDestination);
+						//tripCmd.Parameters.AddWithValue("@FinalDestination", FinalDestination);
+
+						using (SqlDataReader tripReader = tripCmd.ExecuteReader())
+						{
+							while (tripReader.Read())
+							{
+								
+								Trip trip = new Trip
+								{
+									TripId = tripReader.GetInt32(0),
+									DriverId = tripReader.GetInt32(1),
+									VehicleId = tripReader.GetInt32(2),
+									InitDestination = tripReader.GetString(3),
+									FinalDestination = tripReader.GetString(4),
+									Price = tripReader.GetDouble(5),
+									TripDate = tripReader.GetDateTime(6),
+									VehicleName = GetVehicleName(tripReader.GetInt32(2)) // Retrieve VehicleName
+								};
+								UserTripList.Add(trip);
+
+								// Collect unique initial destinations
+								if (!InitDestinations.Contains(trip.InitDestination))
+								{
+									InitDestinations.Add(trip.InitDestination);
+								}
+
+								// Collect unique final destinations
+								if (!FinalDestinations.Contains(trip.FinalDestination))
+								{
+									FinalDestinations.Add(trip.FinalDestination);
+								}
+							}
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("error" + ex.Message);
+			}
+		}
+	}
+
+	
 }

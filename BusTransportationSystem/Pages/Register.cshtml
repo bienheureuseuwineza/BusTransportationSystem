@@ -1,0 +1,82 @@
+﻿@page
+@model BusTransportationSystem.Pages.RegisterModel
+@{
+}
+<!-- Register -->
+
+<div class="contact_form_section">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+
+				<!-- Register Form -->
+				<div class="contact_form_container">
+					<div class="contact_title text-center">Register Here</div>
+					<form method="POST"  class="contact_form text-center">
+
+                        
+                        <input type="text" class="contact_form_name input_field" name="firstname" placeholder="enter your firstname" required="required" data-error="Fisrt Name is required.">
+
+                        <input type="text" class="contact_form_name input_field" name="lastname" placeholder="enter your lastname" required="required" data-error="Last Name is required.">
+
+						<input type="email" class="contact_form_name input_field" name="email" placeholder="your email" required="required" data-error="Email is required.">
+
+						<input type="password" class="contact_form_name input_field" name="password" placeholder="Password" required="required" data-error="Password is required.">
+
+						 
+						<input type="password" class="contact_form_name input_field" name="password2" placeholder="Retype password" required="required" data-error="Password is required.">
+
+
+						<input type="date" class="contact_form_name input_field" name="dob">
+
+						
+
+						<div class="contact_form_name input_field">
+                            <label contact_title>Gender</label>
+							<div class="contact_form_name contact_info_item d-flex flex-row">
+                                <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="FEMALE">
+								<label class="my_text" for="femaleGender">Female</label>
+
+				
+                            </div>
+							<div class="contact_form_name contact_info_item d-flex flex-row">
+								<input class="form-check-input" type="radio" name="gender" id="maleGender" value="MALE">
+								<label class="my_text" for="maleGender">Male</label>
+							</div>
+						</div>
+						<div class="contact_form_name input_field">
+
+								
+							
+                          
+                        </div>
+                       
+
+						<div class="d-flex justify-content-between align-items-center">
+							<!-- Add a checkbox for Administrator login -->
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="isAdmin" name="isAdmin" />
+								<label class="form-check-label" for="isAdmin">I am an administrator</label>
+							</div>
+
+							<a href="#!" class="text-body">Forgot password?</a>
+						</div>
+
+						<div class="text-center text-lg-start mt-4 pt-2">
+							<button type="submit" id="form_submit_button" class="form_submit_button button trans_200">Register<span></span><span></span><span></span></button>
+
+							<p class="small fw-bold mt-2 pt-1 mb-0">
+								Do you have an account? <a href="./Login" class="link-danger">Login</a>
+							</p>
+						</div>
+
+        
+
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
