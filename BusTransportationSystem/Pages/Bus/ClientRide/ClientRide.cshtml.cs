@@ -7,8 +7,8 @@ namespace BusTransportationSystem.Pages.Bus.ClientRide
 {
     public class ClientRideModel : PageModel
     {
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
-
+        /*string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";*/
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
         public ClientRide newClientRide = new ClientRide(); // Changed to ClientRide
         public List<ClientRide> clientRideList = new List<ClientRide>(); // Changed to List of ClientRide
 
@@ -28,7 +28,7 @@ namespace BusTransportationSystem.Pages.Bus.ClientRide
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    string query = "INSERT INTO Client_Ride (trip_id, user_id, payment_status, checkin, tripdate) " +
+                    string query = "INSERT INTO [Client Rides] (trip_id, user_id, payment_status, checkin, tripdate) " +
                                    "VALUES (@TripId, @UserId, @PaymentStatus, @CheckIn, @TripDate)";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
