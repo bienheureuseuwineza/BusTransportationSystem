@@ -6,7 +6,7 @@ namespace BusTransportationSystem.Pages.Bus.ManageDriver
 {
     public class CreateModel : PageModel
     {
-        string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
 
         public Driver newDriver = new Driver(); 
 
@@ -37,7 +37,7 @@ namespace BusTransportationSystem.Pages.Bus.ManageDriver
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    string qry = "INSERT INTO Driver (firstname, lastname, D_category, Phone, dob) " +
+                    string qry = "INSERT INTO Driver (firstname, lastname, D_category, phone, dob) " +
                                  "VALUES (@FirstName, @LastName, @Category, @Phone, @DateOfBirth)";
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand(qry, con))

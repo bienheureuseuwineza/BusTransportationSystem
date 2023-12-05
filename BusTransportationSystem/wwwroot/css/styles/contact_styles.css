@@ -843,7 +843,7 @@ section
 .contact_form_name
 {
 	width: calc((100% - 30px) / 2);
-	margin-right: 30px;
+	margin-right: 10px;
 }
 .contact_form_email
 {
