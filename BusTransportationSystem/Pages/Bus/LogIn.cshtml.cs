@@ -8,8 +8,8 @@ namespace BusTransportationSystem.Pages
 {
     public class LoginModel : PageModel
     {
-        string connString = "Data Source=.;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
-        public User user = new User();
+		string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+		public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
         public void OnGet()

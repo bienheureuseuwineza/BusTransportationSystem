@@ -126,7 +126,7 @@
 						
 						<div onclick="showPanel('panel2')" class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/island.png" alt="">Trips</div>
 						
-						<div onclick="showPanel('panel3')" class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/diving.png" alt="">Drivers</div>
+						<div onclick="showPanel('panel3')" class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="~/css/images/diving.png" alt="">Payements</div>
 						</div>		
 					</div>
 				
@@ -201,7 +201,7 @@
 					<!-- Search Panel -->
 
 				<div id="panel3" class="search_panel">
-					<h2>List of Drivers</h2>
+					<h2>Payments Details</h2>
 					
 					@**<table class="table">
 						<thead>
@@ -296,18 +296,8 @@
 </script>
 
 
-<script>
-	function showPanel(panelId) {
-		// Hide all panels
-		document.querySelectorAll('.search_panel').forEach(panel => {
-			panel.classList.remove('active');
-		});
 
-		// Show the selected panel
-		document.getElementById(panelId).classList.add('active');
-	}
-</script>
-*@
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -338,7 +328,19 @@
 		});
 	});
 </script>
+*@
 
+<script>
+	function showPanel(panelId) {
+		// Hide all panels
+		document.querySelectorAll('.search_panel').forEach(panel => {
+			panel.classList.remove('active');
+		});
+
+		// Show the selected panel
+		document.getElementById(panelId).classList.add('active');
+	}
+</script>
 
 	<!-- Intro -->
 	

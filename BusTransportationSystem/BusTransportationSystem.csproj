@@ -13,6 +13,13 @@
   <ItemGroup>
     <Folder Include="Pages\Bus\ManageUser\" />
  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Bus\LogIn.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 	
 
 </Project>

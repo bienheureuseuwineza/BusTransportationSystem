@@ -50,47 +50,6 @@ namespace BusTransportationSystem.Pages
 		[BindProperty(Name = "finalDestination")]
 		public string FinalDestination { get; set; }
 
-		[HttpPost]
-		public ContentResult OnPost()
-		{
-			// Process form data
-			OnGet();
-
-			// Filter trips based on selected destinations
-			var filteredTrips = UserTripList
-				.Where(t => t.InitDestination == InitDestination && t.FinalDestination == FinalDestination)
-				.ToList();
-
-			// Render the filtered trips as HTML
-			var htmlContent = RenderFilteredTripsAsHtml(filteredTrips);
-
-			return new ContentResult
-			{
-				ContentType = "text/html",
-				Content = htmlContent,
-			};
-		}
-
-		private string RenderFilteredTripsAsHtml(List<Trip> filteredTrips)
-		{
-			// Use StringBuilder or another method to construct the HTML string
-			StringBuilder htmlBuilder = new StringBuilder();
-
-			htmlBuilder.Append("<tbody>");
-			foreach (var trip in filteredTrips)
-			{
-				htmlBuilder.Append("<tr>");
-				htmlBuilder.Append($"<td>{trip.VehicleName}</td>");
-				htmlBuilder.Append($"<td>{trip.InitDestination}</td>");
-				htmlBuilder.Append($"<td>{trip.FinalDestination}</td>");
-				htmlBuilder.Append($"<td>{trip.Price}</td>");
-				htmlBuilder.Append($"<td>{trip.TripDate}</td>");
-				htmlBuilder.Append("</tr>");
-			}
-			htmlBuilder.Append("</tbody>");
-
-			return htmlBuilder.ToString();
-		}
 
 		[HttpGet]
 		public void OnGet()
@@ -108,13 +67,12 @@ namespace BusTransportationSystem.Pages
 				using (SqlConnection con = new SqlConnection(connString))
 				{
 					// Retrieve Trips
-					// Retrieve Trips based on selected initial and final destinations
+					
 					string tripQuery = "SELECT * FROM Trip";
 					con.Open();
 					using (SqlCommand tripCmd = new SqlCommand(tripQuery, con))
 					{
-						//tripCmd.Parameters.AddWithValue("@InitDestination", InitDestination);
-						//tripCmd.Parameters.AddWithValue("@FinalDestination", FinalDestination);
+						
 
 						using (SqlDataReader tripReader = tripCmd.ExecuteReader())
 						{
