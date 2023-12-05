@@ -6,7 +6,7 @@ namespace BusTransportationSystem.Pages.Bus
 {
    public class ManageVehiclesModel : PageModel
 {
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
         public Driver driver = new Driver();
         public List<Driver> userList = new List<Driver>();
         public string Message = "";

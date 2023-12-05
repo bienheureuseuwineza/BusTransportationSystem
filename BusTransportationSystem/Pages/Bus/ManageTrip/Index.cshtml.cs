@@ -6,7 +6,11 @@ namespace BusTransportationSystem.Pages.Bus.ManageTrip
 {
     public class IndexModel : PageModel
     {
+
         string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+
 
         public List<Trip> TripList = new List<Trip>();
 
@@ -27,23 +31,21 @@ namespace BusTransportationSystem.Pages.Bus.ManageTrip
                     con.Open();
                     using (SqlCommand tripCmd = new SqlCommand(tripQuery, con))
                     {
-                        using (SqlDataReader tripReader = tripCmd.ExecuteReader())
+                    using (SqlDataReader tripReader = tripCmd.ExecuteReader())
+                    {
+                        while (tripReader.Read())
                         {
-                            while (tripReader.Read())
+                            Trip trip = new Trip
                             {
-                                Trip trip = new Trip
-                                {
-                                    TripId = tripReader.GetInt32(0),
-                                    DriverId = tripReader.GetInt32(1),
-                                    VehicleId = tripReader.GetInt32(2),
-                                    InitDestination = tripReader.GetString(3),
-                                    FinalDestination = tripReader.GetString(4),
-                                    Price = tripReader.GetDouble(5),
-                                    TripDate = tripReader.GetDateTime(6)
-                                };
-                                TripList.Add(trip);
-
-                            
+                                TripId = tripReader.GetInt32(0),
+                                DriverId = tripReader.GetInt32(1),
+                                VehicleId = tripReader.GetInt32(2),
+                                InitDestination = tripReader.GetString(3),
+                                FinalDestination = tripReader.GetString(4),
+                                Price = tripReader.GetDouble(5),
+                                TripDate = tripReader.GetDateTime(6)
+                            };
+                            TripList.Add(trip);
 
                         }
                     }
