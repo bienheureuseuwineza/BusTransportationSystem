@@ -1,7 +1,7 @@
 @page
 @model BusTransportationSystem.Pages.Bus.Pages_Bus_AdminDashboard
 @{
-  
+    Layout = null;
     ViewData["Title"] = "Admin Dashboard";
 }
 
@@ -45,7 +45,7 @@
                     <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active">
                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <a href="UserManagement" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                         <i class="fas fa-user me-2"></i>User Management
                     </a>
                     <a href="ManageVehicle/Index" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
@@ -58,10 +58,7 @@
                         <i class="fas fa-id-card me-2"></i>Driver Management
                     </a>
 
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-comment-dots me-2"></i>Chat
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                    <a href="Login" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
                         <i class="fas fa-power-off me-2"></i>Logout
                     </a>
                 </div>
@@ -90,7 +87,7 @@
                                 <i class="fas fa-user me-2"></i>Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <li><a class="dropdown-item" href="Login">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
