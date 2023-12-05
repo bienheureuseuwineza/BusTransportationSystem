@@ -6,7 +6,11 @@ namespace BusTransportationSystem.Pages.Bus.ManageVehicle
 {
     public class CreateModel : PageModel
     {
+
+        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+
         string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+
 
         public Vehicle newVehicle = new Vehicle();
 
@@ -51,7 +55,10 @@ namespace BusTransportationSystem.Pages.Bus.ManageVehicle
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
+
+
                     string qry = "INSERT INTO Vehicle (Vehicle_name, Driver_id, vehicle_types, seats) " +
+
                                  "VALUES (@VehicleName, @DriverId, @VehicleTypes, @Seats)";
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand(qry, con))

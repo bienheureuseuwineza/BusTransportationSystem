@@ -7,7 +7,11 @@ namespace BusTransportationSystem.Pages
 {
     public class RegisterModel : PageModel
     {
+
+        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+
         string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+
         public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";

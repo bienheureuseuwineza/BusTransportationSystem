@@ -6,7 +6,7 @@ namespace BusTransportationSystem.Pages.Bus
 {
     public class CreateModel : PageModel
     {
-        string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusTransportationDB;Integrated Security=True;Encrypt=False";
+        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
 
         public Bus newBus = new Bus();
        
