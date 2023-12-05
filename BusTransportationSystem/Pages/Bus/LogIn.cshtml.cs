@@ -8,7 +8,7 @@ namespace BusTransportationSystem.Pages
 {
     public class LoginModel : PageModel
     {
-		string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+		string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
 		public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
@@ -18,11 +18,11 @@ namespace BusTransportationSystem.Pages
         public IActionResult OnPost()
         {
             user.email = Request.Form["email"];
-            user.password = Request.Form["password"];
+            user.pasword = Request.Form["password"];
 
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "SELECT email, password FROM [User] WHERE email = @email";
+                string qry = "SELECT email, pasword, role FROM [User] WHERE email = @email";
                 con.Open();
 
                 using (SqlCommand cmd = new SqlCommand(qry, con))
@@ -35,18 +35,17 @@ namespace BusTransportationSystem.Pages
                         {
                             reader.Read();
                             string storedPasswordHash = reader.GetString(1);
+                            string role = reader.GetString(2); // Assuming role is at index 2
 
                             var passwordHasher = new PasswordHasher<User>();
-                            var result = passwordHasher.VerifyHashedPassword(null, storedPasswordHash, user.password);
+                            var result = passwordHasher.VerifyHashedPassword(null, storedPasswordHash, user.pasword);
 
                             if (result == PasswordVerificationResult.Success)
                             {
-                                string role = reader.GetString(1);
-								//HttpContext.Session.SetString("username", user.email);
+                                //HttpContext.Session.SetString("username", user.email);
 
-
-								// Redirect to different page based on role
-								if (role.Equals("ADMIN"))
+                                // Redirect to different page based on role
+                                if (role.Equals("ADMIN"))
                                 {
                                     return RedirectToPage("/Bus/AdminDashboard");
                                 }
@@ -81,7 +80,7 @@ namespace BusTransportationSystem.Pages
             public string? email { get; set; }
             public string? role { get; set; }
             public string? dob { get; set; }
-            public string? password { get; set; }
+            public string? pasword { get; set; }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BusTransportationSystem.Pages.Bus.ManageStops
 {
     public class EditModel : PageModel
     {
-        string connString = "Data Source=JOSEPHUS-ML;Initial Catalog=BusSystem;Integrated Security=True;Encrypt=False";
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
 
         public Stop stopInfo = new Stop();
 

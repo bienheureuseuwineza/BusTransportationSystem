@@ -7,7 +7,7 @@ namespace BusTransportationSystem.Pages.Bus
 {
     public class UserManagementModel : PageModel
     {
-        string connString = "Data Source=LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem;Integrated Security=True";
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
         public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
@@ -24,24 +24,24 @@ namespace BusTransportationSystem.Pages.Bus
             user.role = Request.Form["role"];
             user.dob = DateTime.Parse(Request.Form["dob"]);
 
-            user.password = Request.Form["password"];
+            user.pasword = Request.Form["password"];
             string confirmpassword = Request.Form["password2"];
             if (string.IsNullOrEmpty(user.firstname) || string.IsNullOrEmpty(user.lastname) ||
-        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.password) ||
+        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.pasword) ||
         string.IsNullOrEmpty(confirmpassword))
             {
                 message = "All fields are required";
                 return;
             }
 
-            if (user.password != confirmpassword)
+            if (user.pasword != confirmpassword)
             {
                 message = "Passwords do not match";
                 return;
             }
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, role, dob,  password) " +
+                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, role, dob,  pasword) " +
                      "VALUES (@firstname, @lastname, @gender, @email, @role, @dob, @password); " +
                      "SELECT SCOPE_IDENTITY();";
                 con.Open();
@@ -54,7 +54,7 @@ namespace BusTransportationSystem.Pages.Bus
                     cmd.Parameters.AddWithValue("@email", user.email);
                     cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@dob", user.dob);
-                    cmd.Parameters.AddWithValue("@password", user.password);
+                    cmd.Parameters.AddWithValue("@password", user.pasword);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -92,7 +92,7 @@ namespace BusTransportationSystem.Pages.Bus
                             role = reader["role"].ToString(),
                              //dob = reader["dob"].ToString(),
                             dob = reader["dob"] != DBNull.Value ? Convert.ToDateTime(reader["dob"]) : (DateTime?)null,
-                            password = reader["password"].ToString()
+                            pasword = reader["pasword"].ToString()
                         };
 
                         userList.Add(user);
@@ -113,7 +113,7 @@ namespace BusTransportationSystem.Pages.Bus
             public string? email { get; set; }
             public string? role { get; set; }
             public DateTime? dob { get; set; }
-            public string? password { get; set; }
+            public string? pasword { get; set; }
 
         }
     }
