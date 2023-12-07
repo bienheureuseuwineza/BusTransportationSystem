@@ -1,47 +1,74 @@
 ﻿@page
 @model BusTransportationSystem.Pages.Bus.ManageVehiclesModel
 @{
+    Layout = "_DashLayout";
 }
 
-<h2>Manage Vehicles</h2>
 
-<!-- Registration Form -->
-<form method="post" asp-page-handler="RegisterDriver">
-    <input type="text" name="firstName" placeholder="First Name" />
-    <input type="text" name="lastName" placeholder="Last Name" />
-    <input type="text" name="drivingCategory" placeholder="Driving Category" />
-    <input type="text" name="phoneNumber" placeholder="Phone Number" />
-    <button type="submit">Register Driver</button>
-</form>
+<main>
+<br />
+<br />
+<br />
+<br />
+<h2>LOCATION SELECTION</h2>
 
-@if (!string.IsNullOrEmpty(Model.Message))
-{
-    <div class="alert">@Model.Message</div>
-}
 
-<!-- Table of Drivers -->
-<table>
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Driving Category</th>
-            <th>Phone Number</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var driver in Model.userList)
-        {
+
+    <form method="POST">
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label" for="initial_destination">Initial Destination</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="initial_destination" name="initial_destination">
+                    @foreach (var initDest in Model.InitialDestinations)
+                    {
+                        <option value="@initDest">@initDest</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label" for="final_destination">Final Destination</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="final_destination" name="final_destination">
+                    @foreach (var finalDest in Model.FinalDestinations)
+                    {
+                        <option value="@finalDest">@finalDest</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="offset-sm-3 col-sm-4 d-grid">
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>@driver.firstname</td>
-                <td>@driver.lastname</td>
-                <td>@driver.drivingCategory</td>
-                <td>@driver.phoneNumber</td>
-                <td>
-                    <!-- Add Edit and Delete buttons with appropriate handlers -->
-                </td>
+                <th>Driver Name</th>
+                <th>Initial Destination</th>
+                <th>Final Destination</th>
+                <th>Price</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var trip in Model.DisplayedData)
+            {
+                <tr>
+                    <td>@trip.DriverName</td>
+                    <td>@trip.InitialDestination</td>
+                    <td>@trip.FinalDestination</td>
+                    <td>@trip.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+

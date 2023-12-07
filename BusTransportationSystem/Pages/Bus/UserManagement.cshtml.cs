@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Reflection.PortableExecutable;
 
 namespace BusTransportationSystem.Pages.Bus
 {
@@ -10,7 +11,8 @@ namespace BusTransportationSystem.Pages.Bus
 
         //string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
 
-        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+        string connString = "Data Source = LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem; Integrated Security = True";
+
 
         public User user = new User();
         public List<User> userList = new List<User>();
@@ -28,24 +30,24 @@ namespace BusTransportationSystem.Pages.Bus
             user.role = Request.Form["role"];
             user.dob = DateTime.Parse(Request.Form["dob"]);
 
-            user.pasword = Request.Form["password"];
+            user.password = Request.Form["password"];
             string confirmpassword = Request.Form["password2"];
             if (string.IsNullOrEmpty(user.firstname) || string.IsNullOrEmpty(user.lastname) ||
-        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.pasword) ||
+        string.IsNullOrEmpty(user.gender) || string.IsNullOrEmpty(user.email) || string.IsNullOrEmpty(user.password) ||
         string.IsNullOrEmpty(confirmpassword))
             {
                 message = "All fields are required";
                 return;
             }
 
-            if (user.pasword != confirmpassword)
+            if (user.password != confirmpassword)
             {
                 message = "Passwords do not match";
                 return;
             }
             using (SqlConnection con = new SqlConnection(connString))
             {
-                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, role, dob,  pasword) " +
+                string qry = "INSERT INTO [User] (firstname, lastname, gender, email, role, dob,  password) " +
                      "VALUES (@firstname, @lastname, @gender, @email, @role, @dob, @password); " +
                      "SELECT SCOPE_IDENTITY();";
                 con.Open();
@@ -58,7 +60,7 @@ namespace BusTransportationSystem.Pages.Bus
                     cmd.Parameters.AddWithValue("@email", user.email);
                     cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@dob", user.dob);
-                    cmd.Parameters.AddWithValue("@password", user.pasword);
+                    cmd.Parameters.AddWithValue("@password", user.password);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -96,7 +98,7 @@ namespace BusTransportationSystem.Pages.Bus
                             role = reader["role"].ToString(),
                              //dob = reader["dob"].ToString(),
                             dob = reader["dob"] != DBNull.Value ? Convert.ToDateTime(reader["dob"]) : (DateTime?)null,
-                            pasword = reader["pasword"].ToString()
+                            password = reader["password"].ToString()
                         };
 
                         userList.Add(user);
@@ -117,7 +119,7 @@ namespace BusTransportationSystem.Pages.Bus
             public string? email { get; set; }
             public string? role { get; set; }
             public DateTime? dob { get; set; }
-            public string? pasword { get; set; }
+            public string? password { get; set; }
 
         }
     }

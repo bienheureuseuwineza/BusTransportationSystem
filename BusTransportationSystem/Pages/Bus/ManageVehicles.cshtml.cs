@@ -4,80 +4,126 @@ using System.Data.SqlClient;
 
 namespace BusTransportationSystem.Pages.Bus
 {
-   public class ManageVehiclesModel : PageModel
-{
-        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
-        public Driver driver = new Driver();
-        public List<Driver> userList = new List<Driver>();
-        public string Message = "";
-
-    public void OnGet()
+    public class ManageVehiclesModel : PageModel
     {
-        // Fetch and display existing drivers
-        // Drivers = FetchDriversFromDb();
-    }
-        private bool RegisterDriver(string firstName, string lastName, string drivingCategory, string phoneNumber)
+        //string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+        string connString = "Data Source = LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem; Integrated Security = True";
+        
+        public List<TripInfo> DisplayedData { get; set; } = new List<TripInfo>();
+        public List<string> InitialDestinations { get; set; } = new List<string>();
+        public List<string> FinalDestinations { get; set; } = new List<string>();
+        public void OnGet()
+        {
+            FetchDestinationsFromDB();
+            
+        }
+
+        private void FetchDestinationsFromDB()
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(connString))
+                using (SqlConnection connection = new SqlConnection(connString))
                 {
-                    con.Open();
-                    string query = "INSERT INTO Drivers (firstname, lastname, d_category, phone) VALUES (@firstname, @lastname, @d_category, @phone)";
 
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@firstname", firstName);
-                        cmd.Parameters.AddWithValue("@lastname", lastName);
-                        cmd.Parameters.AddWithValue("@d_category", drivingCategory);
-                        cmd.Parameters.AddWithValue("@phone", phoneNumber);
+                    connection.Open();
 
-                        int result = cmd.ExecuteNonQuery();
 
-                        return result > 0;
-                    }
+                    string initDestinationQuery = "SELECT DISTINCT init_destination FROM Trip";
+                    InitialDestinations = FetchDestinations(connection, initDestinationQuery);
+
+                    string finalDestinationQuery = "SELECT DISTINCT final_destination FROM Trip";
+                    FinalDestinations = FetchDestinations(connection, finalDestinationQuery);
+
+
+                    connection.Close();
                 }
             }
             catch (Exception ex)
             {
-                // Log exception
-                return false;
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private List<string> FetchDestinations(SqlConnection connection, string query)
+        {
+            List<string> destinations = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(0))
+                        {
+                            destinations.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+
+            return destinations;
+        }
+
+
+        public void OnPost(string initial_destination, string final_destination)
+        {
+            FetchDisplayedData(initial_destination, final_destination);
+        }
+        private void FetchDisplayedData(string initialDestination, string finalDestination)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    connection.Open();
+
+                    string query = @"SELECT CONCAT(D.firstname, ' ', D.lastname) AS DriverName, 
+                            T.init_destination, 
+                            T.final_destination, 
+                            T.price 
+                     FROM Trip T
+                     INNER JOIN Driver D ON T.driver_id = D.id
+                     WHERE T.init_destination = @initialDestination 
+                           AND T.final_destination = @finalDestination";
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@initialDestination", initialDestination);
+                    command.Parameters.AddWithValue("@finalDestination", finalDestination);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        DisplayedData = new List<TripInfo>();
+
+                        while (reader.Read())
+                        {
+                            TripInfo trip = new TripInfo
+                            {
+                                DriverName = reader.GetString(0),
+                                InitialDestination = reader.GetString(1),
+                                FinalDestination = reader.GetString(2),
+                                Price = reader.GetDouble(3)
+                            };
+
+                            DisplayedData.Add(trip);
+                        }
+                    }
+
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
-
-        public void OnPostRegisterDriver()
-    {
-        var firstName = Request.Form["firstName"];
-        var lastName = Request.Form["lastName"];
-        var drivingCategory = Request.Form["drivingCategory"];
-        var phoneNumber = Request.Form["phoneNumber"];
-
-            // Validate and save the driver
-            // bool isRegistered = RegisterDriver(firstName, lastName, drivingCategory, phoneNumber);
-            bool isRegistered = RegisterDriver(firstName, lastName, drivingCategory, phoneNumber);
-
-
-            if (isRegistered)
-        {
-            Message = "Driver registered successfully.";
-        }
-        else
-        {
-            Message = "Registration failed.";
-        }
     }
-
-        // Add methods for Edit and Delete operations
-        public class Driver
-        {
-            public int? Id { get; set; }
-            public string? firstname { get; set; }
-            public string? lastname { get; set; }
-            public string? drivingCategory { get; set; }
-            public string? phoneNumber { get; set; }
-          
-        }
-    }
-
+public class TripInfo
+{
+    public string DriverName { get; set; }
+    public string InitialDestination { get; set; }
+    public string FinalDestination { get; set; }
+    public double Price { get; set; }
+}
+   
 }
