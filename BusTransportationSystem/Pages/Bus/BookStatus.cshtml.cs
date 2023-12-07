@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BusTransportationSystem.Pages.Bus
 {
-    public class DashboardModel : PageModel
+    public class BookStatusModel : PageModel
     {
         public void OnGet()
         {
         }
-
     }
 }
