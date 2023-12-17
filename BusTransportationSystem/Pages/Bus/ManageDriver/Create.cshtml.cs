@@ -7,12 +7,12 @@ namespace BusTransportationSystem.Pages.Bus.ManageDriver
     public class CreateModel : PageModel
     {
 
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
+		/*string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
 
-        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";
+        string connString = "Data Source=DESKTOP-SED41CT\\SQLEXPRESS01;Initial Catalog=BusSystem;Integrated Security=True";*/
+		string connString = "Data Source = LAPTOP - E65QRG1A\\SQLEXPRESS;Initial Catalog = BusSystem; Integrated Security = True";
 
-
-        public Driver newDriver = new Driver(); 
+		public Driver newDriver = new Driver(); 
 
         public string errorMessage = "";
         public string successMessage = "";
