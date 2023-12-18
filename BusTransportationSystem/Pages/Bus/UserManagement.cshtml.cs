@@ -9,12 +9,10 @@ namespace BusTransportationSystem.Pages.Bus
     public class UserManagementModel : PageModel
     {
 
-        //string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
-
         string connString = "Data Source = LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem; Integrated Security = True";
 
 
-        public User user = new User();
+		public User user = new User();
         public List<User> userList = new List<User>();
         public string message = "";
         public void OnGet()

@@ -7,12 +7,10 @@ namespace BusTransportationSystem.Pages.Bus.ManageVehicle
     public class IndexModel : PageModel
     {
 
-        //string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
 
-        string connString = "Data Source = LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem; Integrated Security = True";
+		string connString = "Data Source = LAPTOP - E65QRG1A\\SQLEXPRESS;Initial Catalog = BusSystem; Integrated Security = True";
 
-
-        public List<Vehicle> VehicleList = new List<Vehicle>();
+		public List<Vehicle> VehicleList = new List<Vehicle>();
 
         public void OnGet()
         {
