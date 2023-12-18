@@ -6,8 +6,8 @@ namespace BusTransportationSystem.Pages.Bus.ClientRide
 {
     public class IndexModel : PageModel
     {
-        string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";
-
+        /*string connString = "Data Source=HOLLYUWINEZA\\SQLEXPRESS;Initial Catalog=BUSMANAGEMENTSYSTEM;Integrated Security=True";*/
+        string connString = "Data Source = LAPTOP-E65QRG1A\\SQLEXPRESS;Initial Catalog=BusSystem; Integrated Security = True";
         public List<Client> VehicleList = new List<Client>();
 
         public void OnGet()
@@ -20,7 +20,7 @@ namespace BusTransportationSystem.Pages.Bus.ClientRide
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     // Retrieve Vehicles
-                    string vehicleQuery = "SELECT * FROM Client_Ride";
+                    string vehicleQuery = "SELECT * FROM [Client_rides]";
                     con.Open();
                     using (SqlCommand vehicleCmd = new SqlCommand(vehicleQuery, con))
                     {
